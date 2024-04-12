@@ -1,15 +1,21 @@
 "use client";
 
-import React from "react";
-import { FieldErrors, useForm } from "react-hook-form";
-
-interface LoginForm {
-  name: string;
-  email: string;
-  password: string;
-}
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import RadioGroup from "./components/RadioGroup";
+import SelectField from "./components/SelectField";
+import TextField from "./components/TextField";
+import TextAreaField from "./components/TextAreaField";
+import { LoginForm } from "./types";
+import {
+  DEPARTMENT_OPTIONS,
+  PURPOSE_OPTIONS,
+  SALARY_OPTIONS,
+} from "./constants";
+import EmailField from "./components/EmailField";
 
 export default function Home() {
+  const [result, setResult] = React.useState<string>("");
   const {
     register,
     handleSubmit,
@@ -17,87 +23,100 @@ export default function Home() {
     reset,
   } = useForm<LoginForm>({
     defaultValues: {
-      name: "",
+      department: "",
+      purpose: "",
+      salary: "$50K",
+      pr: "",
+      dream: "",
       email: "",
-      password: "",
     },
   });
 
   const onValid = (data: LoginForm) => {
     console.log(data);
+    setResult(JSON.stringify(data, null, 2));
   };
 
-  const onInvalid = (error: FieldErrors) => {
-    console.log(error);
-  };
-
-  const onReset = () => {
-    reset();
+  const onInvalid = (errors: any) => {
+    console.log(errors);
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
-        className="flex flex-col group-[300px] justify-center items-center"
+        className="flex flex-col gap-4 px-4 py-1 border border-gray-300 rounded-md shadow-md w-[500px]"
       >
-        <input
-          {...register("name", { required: "이름을 써주세용." })}
-          type="text"
-          className="border border-gray-300 rounded-md p-2"
-          placeholder="Name"
+        <h1 className="text-4xl font-bold text-center my-2">
+          Job Application Form
+        </h1>
+        <RadioGroup
+          label="What department do you want to work for?"
+          options={DEPARTMENT_OPTIONS}
+          register={register}
+          name="department"
         />
-        {errors.name && (
-          <span className="text-red-500 text-sm">{errors.name.message}</span>
-        )}
+        <RadioGroup
+          label="Why do you want top join this company?"
+          options={PURPOSE_OPTIONS}
+          register={register}
+          name="purpose"
+        />
 
-        <input
-          {...register("email", {
+        <SelectField
+          register={register}
+          name="salary"
+          options={SALARY_OPTIONS}
+        />
+        <TextField
+          register={register}
+          name="pr"
+          type="text"
+          validation={{
+            required: "자기소개는 적어도 10글자 이상이어야해용",
+            validate: (value: string) =>
+              value.length >= 10 || "자기소개는 적어도 10글자 이상이어야해용",
+          }}
+          error={errors.pr}
+        />
+        <TextAreaField
+          register={register}
+          name="dream"
+          rows={3}
+          validation={{
+            required: "꿈은 적어도 50글자 이상이어야해용",
+            validate: (value: string) =>
+              value.length >= 50 || "꿈은 적어도 50글자 이상이어야해용",
+          }}
+          error={errors.dream}
+        />
+        <EmailField
+          register={register}
+          name="email"
+          validation={{
             required: "이메일을 써주세용",
             validate: {
-              isNaver: (value) =>
+              isNaver: (value: string) =>
                 value.includes("naver.com") || "@naver 이메일만 가능해용",
             },
-          })}
-          type="email"
-          className="border border-gray-300 rounded-md p-2"
-          placeholder="Email"
+          }}
+          error={errors.email}
         />
-        {errors.email && (
-          <span className="text-red-500 text-sm">{errors.email.message}</span>
-        )}
-
-        <input
-          {...register("password", {
-            required: "비밀번호는 적어도 10글자 이상이어야해용",
-            validate: (value) =>
-              value.length >= 10 || "비밀번호는 적어도 10글자 이상이어야해용",
-          })}
-          type="password"
-          className="border border-gray-300 rounded-md p-2"
-          placeholder="Password"
-        />
-        {errors.password && (
-          <span className="text-red-500 text-sm">
-            {errors.password.message}
-          </span>
-        )}
-        <div className="gap-4 flex mt-5">
-          <input
-            type="submit"
-            value="로그인"
-            className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 cursor-pointer"
-          />
-          <button
-            type="button"
-            onClick={onReset}
-            className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 cursor-pointer"
-          >
-            초기화
-          </button>
-        </div>
-        {isSubmitSuccessful && (
-          <span className="text-green-500">성공적으로 로그인 되었어용</span>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+        >
+          Give me this job!
+        </button>
+        <button
+          type="button"
+          onClick={() => reset()}
+          className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
+        >
+          Reset
+        </button>
+        {isSubmitSuccessful && result && (
+          <div className="text-green-500 font-semibold">{result}</div>
         )}
       </form>
     </div>
