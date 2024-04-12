@@ -1,4 +1,3 @@
-// TextAreaField.tsx
 import React from "react";
 import { UseFormRegister, FieldError } from "react-hook-form";
 import { LoginForm } from "../types";
