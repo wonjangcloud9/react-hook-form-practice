@@ -2,13 +2,6 @@ import React from "react";
 import { UseFormRegister } from "react-hook-form";
 import { LoginForm } from "../types";
 
-interface RadioGroupProps {
-  label: string;
-  options: Array<{ value: string; label: string }>;
-  register: UseFormRegister<LoginForm>;
-  name: keyof LoginForm;
-}
-
 const RadioGroup: React.FC<RadioGroupProps> = ({
   label,
   options,
@@ -19,7 +12,10 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
     <div className="font-semibold">{label}</div>
     {options.map((option, index) =>
       index === 0 ? (
-        <label key={option.value} className="flex items-center gap-2">
+        <label
+          key={option.value}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <input
             type="radio"
             value={option.value}
@@ -29,7 +25,10 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
           {option.label}
         </label>
       ) : (
-        <label key={option.value} className="flex items-center gap-2">
+        <label
+          key={option.value}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <input type="radio" value={option.value} {...register(name)} />
           {option.label}
         </label>
@@ -39,3 +38,10 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
 );
 
 export default RadioGroup;
+
+interface RadioGroupProps {
+  label: string;
+  options: Array<{ value: string; label: string }>;
+  register: UseFormRegister<LoginForm>;
+  name: keyof LoginForm;
+}

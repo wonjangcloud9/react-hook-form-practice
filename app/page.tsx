@@ -45,7 +45,7 @@ export default function Home() {
     <div className="flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
-        className="flex flex-col gap-4 px-4 py-1 border border-gray-300 rounded-md shadow-md w-[500px]"
+        className="flex flex-col gap-4 px-4 py-1 border border-gray-300 rounded-lg shadow-md w-[500px] bg-pink-100 border-r-4 border-b-4 "
       >
         <h1 className="text-4xl font-bold text-center my-2">
           Job Application Form
@@ -104,14 +104,14 @@ export default function Home() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          className="bg-yellow-300 text-black font-semibold p-2 rounded-md hover:bg-yellow-400 transition-colors"
         >
           Give me this job!
         </button>
         <button
           type="button"
           onClick={() => reset()}
-          className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
+          className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-colors"
         >
           Reset
         </button>

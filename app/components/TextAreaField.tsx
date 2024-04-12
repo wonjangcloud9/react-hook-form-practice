@@ -3,14 +3,6 @@ import React from "react";
 import { UseFormRegister, FieldError } from "react-hook-form";
 import { LoginForm } from "../types";
 
-interface TextAreaFieldProps {
-  register: UseFormRegister<LoginForm>;
-  name: keyof LoginForm;
-  rows: number;
-  validation: object;
-  error?: FieldError;
-}
-
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
   register,
   name,
@@ -32,3 +24,11 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
 );
 
 export default TextAreaField;
+
+interface TextAreaFieldProps {
+  register: UseFormRegister<LoginForm>;
+  name: keyof LoginForm;
+  rows: number;
+  validation: object;
+  error?: FieldError;
+}

@@ -2,13 +2,6 @@ import React from "react";
 import { UseFormRegister, FieldError } from "react-hook-form";
 import { LoginForm } from "../types";
 
-interface EmailFieldProps {
-  register: UseFormRegister<LoginForm>;
-  name: keyof LoginForm;
-  validation: object;
-  error?: FieldError;
-}
-
 const EmailField: React.FC<EmailFieldProps> = ({
   register,
   name,
@@ -33,3 +26,9 @@ const EmailField: React.FC<EmailFieldProps> = ({
 );
 
 export default EmailField;
+interface EmailFieldProps {
+  register: UseFormRegister<LoginForm>;
+  name: keyof LoginForm;
+  validation: object;
+  error?: FieldError;
+}
