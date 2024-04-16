@@ -39,6 +39,7 @@ export default function Home() {
 
   const onInvalid = (errors: any) => {
     console.log(errors);
+    console.log("되나");
   };
 
   return (
